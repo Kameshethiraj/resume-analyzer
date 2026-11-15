@@ -1,0 +1,74 @@
+[
+  {
+    "question": "How did you handle scalability challenges when implementing asynchronous order processing with RabbitMQ for the Food Ordering Platform, and what trade-offs did you make between message queue retention and real-time event delivery?",
+    "answer": "Rabbitmq is a message broker, I will add extra brokers and queues. For retention, I will take backups",
+    "score": 2,
+    "strengths": [
+      "Acknowledged RabbitMQ as a message broker",
+      "Mentioned adding extra brokers and queues for scalability"
+    ],
+    "improvements": [
+      "Did not specify how retention backups work (e.g., persistent queues, disk storage)",
+      "No details on real-time event delivery trade-offs (e.g., message durability vs. delivery speed)",
+      "Lacked explanation of how message retention affects system scalability"
+    ],
+    "feedback": "The answer shows basic understanding of RabbitMQ but lacks technical depth on retention mechanisms and real-time trade-offs. Key concepts like message persistence and delivery guarantees were omitted.",
+    "follow_up_question": "How would you ensure message durability while maintaining low-latency delivery for time-sensitive order events?"
+  },
+  {
+    "question": "How would you ensure message durability while maintaining low-latency delivery for time-sensitive order events?",
+    "answer": "I would declare durable queues and publish persistent messages (delivery_mode=2) so orders survive a broker restart. For low latency, I would use publisher confirms asynchronously in batches instead of a transaction per message, and set a prefetch count on consumers so they stay busy without being overloaded. Consumers use manual acknowledgements, so a message is only removed after the order is processed. Failed messages are retried with a limit and then go to a dead-letter queue. For time-sensitive orders, I would use a separate priority queue with a short TTL, and run quorum queues across multiple nodes so a single node failure doesn't lose data.",
+    "score": 10,
+    "strengths": [
+      "Correctly identifies durable queues and persistent messages for durability",
+      "Accurately describes publisher confirms in batches for low latency",
+      "Properly explains manual acknowledgements and dead-letter queues for failure handling"
+    ],
+    "improvements": [
+      "Clarify that quorum queues are for replication, not directly for durability in this context",
+      "Specify that TTL should be set on the priority queue, not the message itself",
+      "Mention that publisher confirms require a separate acknowledgment mechanism to avoid message loss"
+    ],
+    "feedback": "The candidate demonstrates strong understanding of RabbitMQ concepts for message durability and low-latency delivery. They cover key patterns like persistent messages, publisher confirms, and dead-letter queues effectively. Minor clarifications on quorum queues and TTL implementation would strengthen the answer.",
+    "follow_up_question": "How would you handle message re-delivery for messages that fail after the TTL expires in the priority queue?"
+  },
+  {
+    "question": "How do you optimize API response times when using Redis caching with Django REST Framework, especially when dealing with frequent cache misses for user authentication tokens?",
+    "answer": "I would cache frequently read API responses in Redis with a sensible TTL and a clear key scheme, for example by endpoint and query params, so lookups are fast and predictable. For authentication tokens, I would store the validated token or session data in Redis with a TTL matching the token expiry, so each request skips a database lookup. To handle frequent cache misses, I would warm the cache for hot keys, add small random jitter to TTLs to avoid many keys expiring together, and use a lock or request coalescing to prevent a cache stampede when a popular key expires. I would invalidate the cache on writes, using signals in Django, so stale data is not served. I would also monitor the hit ratio and use select_related and prefetch_related to cut the cost of the queries that do reach the database.",
+    "score": 8,
+    "strengths": [
+      "Mentions TTL for token expiry to match token lifespan",
+      "Includes cache warming for hot keys to handle frequent misses",
+      "Proposes using signals for cache invalidation on writes"
+    ],
+    "improvements": [
+      "Should specify how token validation is handled (e.g., JWT vs session tokens)",
+      "Could add details on request coalescing mechanism to prevent stampede",
+      "Lacks mention of cache invalidation strategy for token refreshes"
+    ],
+    "feedback": "The answer covers key optimization techniques but misses specific token validation context and refresh flow details. Good practical suggestions for cache warming and TTL management.",
+    "follow_up_question": "How would you handle token refreshes in the cache to avoid cache stampede when tokens expire?"
+  },
+  {
+    "question": "How do you ensure that unit tests for the Food Ordering Platform's order processing flow cover edge cases like partial payments and cancellations without impacting the overall system performance?",
+    "answer": "",
+    "score": 0,
+    "strengths": [],
+    "improvements": [
+      "Provide an answer to the question."
+    ],
+    "feedback": "No answer was provided.",
+    "follow_up_question": "How do you ensure that unit tests for the Food Ordering Platform's order processing flow cover edge cases like partial payments and cancellations without impacting the overall system performance?"
+  },
+  {
+    "question": "How do you ensure that unit tests for the Food Ordering Platform's order processing flow cover edge cases like partial payments and cancellations without impacting the overall system performance?",
+    "answer": "",
+    "score": 0,
+    "strengths": [],
+    "improvements": [
+      "Provide an answer to the question."
+    ],
+    "feedback": "No answer was provided.",
+    "follow_up_question": "How do you ensure that unit tests for the Food Ordering Platform's order processing flow cover edge cases like partial payments and cancellations without impacting the overall system performance?"
+  }
+]

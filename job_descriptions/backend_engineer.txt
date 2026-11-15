@@ -1,0 +1,22 @@
+We are looking for a Backend Engineer.
+
+Required Skills:
+- Python
+- FastAPI
+- PostgreSQL
+- Redis
+- Docker
+- REST APIs
+- 3+ years of backend development experience
+
+Preferred Skills:
+- AWS
+- RabbitMQ
+- Kubernetes
+
+Responsibilities:
+- Design and develop backend APIs.
+- Build scalable backend services.
+- Work with PostgreSQL and Redis.
+- Develop asynchronous systems using messaging technologies.
+- Deploy and maintain applications using Docker and cloud technologies.
